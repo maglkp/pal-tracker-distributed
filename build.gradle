@@ -18,6 +18,7 @@ buildscript {
         springCloudServicesClientLibrariesVersion = "2.0.2.RELEASE"
     }
 
+
     repositories {
         mavenCentral()
         jcenter()
