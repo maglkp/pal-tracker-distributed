@@ -1,6 +1,6 @@
 package io.pivotal.pal.tracker.allocations;
 
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestOperations;
@@ -19,7 +19,7 @@ public class ProjectClient {
         this.registrationServerEndpoint = registrationServerEndpoint;
     }
 
-    @CircuitBreaker(name = "project", fallbackMethod = "getProjectFromCache")
+    @HystrixCommand(fallbackMethod = "getProjectFromCache")
     public ProjectInfo getProject(long projectId) {
         ProjectInfo projectInfo = restOperations.getForObject(registrationServerEndpoint + "/projects/" + projectId, ProjectInfo.class);
         cache.put(projectId, projectInfo);
